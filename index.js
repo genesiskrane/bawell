@@ -1,20 +1,21 @@
-require("./config");
+const config = require("./config");
 const { init } = require("./core");
 
 const cors = require("cors");
 const morgan = require("morgan");
 const express = require("express");
 
-const app = express();
+const router = require("./router");
 
+const app = express();
 
 // HTTPS Redirect
 app.use((req, res, next) => {
-    if (process.env.NODE_ENV == "production")
-        if (req.headers["x-forwarded-proto"] !== "https") {
-            return res.redirect(`https://${req.headers.host}${req.url}`);
-        }
-    next();
+  if (process.env.NODE_ENV == "production")
+    if (req.headers["x-forwarded-proto"] !== "https") {
+      return res.redirect(`https://${req.headers.host}${req.url}`);
+    }
+  next();
 });
 
 app.set("trust proxy", true);
@@ -25,16 +26,16 @@ app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api", router);
+
 app.all("/{*any}", (req, res) => {
-    res.send(req.headers.host);
+  res.send(req.headers.host);
 });
 
-const PORT = process.env.PORT || 3000;
-
 (async () => {
-    await init();
+  await init();
 
-    app.listen(PORT, () => {
-        console.log(`Server Started @ ${PORT}`);
-    });
+  app.listen(config.port, () => {
+    console.log(`Server Started @ ${config.port}`);
+  });
 })();

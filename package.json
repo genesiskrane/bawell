@@ -1,12 +1,12 @@
 {
-  "name": "supercpanel",
+  "name": "bawell",
   "version": "1.0.0",
-  "description": "Node Express server for SuperCPanel",
+  "description": "Bawell Toolbox - A Node.js Express application",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "update-template": "git remote remove template && git remote add template https://github.com/genesiskrane/node-express && git fetch template && git merge template/main --allow-unrelated-histories"
+    "update-template": "git remote add template https://github.com/genesiskrane/node-express && git fetch template && git merge template/main --allow-unrelated-histories"
   },
   "author": "Genesis Krane",
   "license": "ISC",
